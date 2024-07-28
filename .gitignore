@@ -1,0 +1,8 @@
+node_modules/
+.json
+server.js
+.py
+.spec
+.env
+.DS_Store
+.exe
