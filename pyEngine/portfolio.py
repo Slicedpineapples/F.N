@@ -56,5 +56,17 @@ def portfolioOUTPUT():
     sql = "SELECT * FROM Portfolio"
     cursor.execute(sql)
     result = cursor.fetchall()
+    
+    output = []
+    for row in result:
+        output.append({
+            'Portfolio_ID': row[0],
+            'Portfolio_Image': row[1],
+            'Portfolio_Title': row[2],
+            'Portfolio_Long_Description': row[3],
+            'Client': row[4],
+            'Client_URL': row[5],
+            'Category': row[6]
+        })
     cursor.close()
-    return result
+    return output
