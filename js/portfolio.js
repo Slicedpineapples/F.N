@@ -10,12 +10,12 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(data => {
         let portfolioRow = document.querySelector("#portfolio .row");
         if (portfolioRow) {
-            data.forEach((item, index) => {
+            data.forEach((item) => {
                 let portfolioHTML = `
                     <div class="col-lg-4 col-sm-6 mb-4">
-                        <!-- Portfolio item ${index + 1} -->
+                        <!-- Portfolio item ${item.Portfolio_ID} -->
                         <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal${index + 1}">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal${item.Portfolio_ID}">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
@@ -30,6 +30,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 `;
                 portfolioRow.innerHTML += portfolioHTML;
             });
+
+            // Inject modals after fetching the data and creating portfolio items
+            injectModals(data);
         }
     })
     .catch(error => console.error('Error fetching portfolio data:', error));
