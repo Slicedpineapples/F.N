@@ -3,7 +3,7 @@ from flask_cors import CORS
 from service import serviceINPUT, serviceUPDATE, serviceDELETE, serviceOUTPUT
 from portfolio import portfolioINPUT, portfolioUPDATE, portfolioDELETE, portfolioOUTPUT
 from about import aboutINPUT, aboutUPDATE, aboutDELETE, aboutOUTPUT
-
+from login import login, signUp
 app = Flask(__name__)
 CORS(app)
 
@@ -45,6 +45,14 @@ def about():
     elif data['operation'] == 'OUTPUT':
         return jsonify(aboutOUTPUT())
     return 'Operation successful'
+
+@app.route('/login', methods=['POST'])
+def loginAPI():
+    data = request.get_json()
+    if data['operation'] == 'SIGNUP':
+        return jsonify(signUp(data['username'], data['password']))
+    elif data['operation'] == 'LOGIN':
+        return jsonify(login(data['username'], data['password']))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
