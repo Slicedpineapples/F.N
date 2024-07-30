@@ -3,6 +3,7 @@ if (!sessionStorage.getItem('username')) {
     // Redirect to login page or display an error message
     window.location.href = '/';
 }
+
 // Sorting hostname for API URL
 const hostname = window.location.hostname;
 let apiUrl;
@@ -10,6 +11,11 @@ if (hostname === 'localhost' || hostname === '127.0.0.1') {
     apiUrl = 'http://127.0.0.1:5001/';
 } else {
     apiUrl = `http://${hostname}:5001/`;
+}
+
+function endSession(){
+    sessionStorage.clear();
+    window.location.href = 'login.html';
 }
 
 function serviceINPUT() {
@@ -27,7 +33,6 @@ function serviceINPUT() {
             fetch('templates/service.html')
                 .then(response => response.text())
                 .then(html => {
-                    // console.log('Fetched HTML:', html); // Log the fetched HTML content
                     const domParser = new DOMParser();
                     const parsedDoc = domParser.parseFromString(html, 'text/html');
 
@@ -44,8 +49,17 @@ function serviceINPUT() {
                             const Image = document.getElementById('image').value.trim();
                             const Title = document.getElementById('title').value.trim();
                             const Description = document.getElementById('description').value.trim();
-                            // console.log(apiUrl);
-                            
+
+                            // Validate form data
+                            if (!Image || !Title || !Description) {
+                                document.getElementById('serviceMessage').innerText = 'Please fill in all the fields.';
+                                setTimeout(() => {
+                                    document.getElementById('serviceMessage').innerText = '';
+                                }, 3000);
+    
+                                return;
+                            }
+
                             const response = await fetch(`${apiUrl}service`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -59,7 +73,6 @@ function serviceINPUT() {
 
                             const result = await response.json();
                             document.getElementById('serviceMessage').innerText = result;
-                            // console.log(result);
                             setTimeout(() => {
                                 document.getElementById('serviceMessage').innerText = '';
                             }, 3000);
@@ -91,14 +104,11 @@ function portfolioINPUT() {
 
     if (portfolioExtension.style.display === "none" || !portfolioForm) {
         if (!portfolioForm) {
-            fetch('templates/portfolio.html') 
-            .then(response => response.text())
-            .then(html => {
-                const domParser = new DOMParser();
-                const parsedDoc = domParser.parseFromString(html, 'text/html');
-                // console.log('Fetched HTML:', html); // Log the fetched HTML content
-                
-                    // Append all child nodes from parsedDoc to portfolioExtension
+            fetch('templates/portfolio.html')
+                .then(response => response.text())
+                .then(html => {
+                    const domParser = new DOMParser();
+                    const parsedDoc = domParser.parseFromString(html, 'text/html');
                     while (parsedDoc.body.firstChild) {
                         portfolioExtension.appendChild(document.adoptNode(parsedDoc.body.firstChild));
                     }
@@ -116,6 +126,16 @@ function portfolioINPUT() {
                             const client = document.getElementById('client').value.trim();
                             const client_URL = document.getElementById('client_URL').value.trim();
                             const category = document.getElementById('category').value.trim();
+
+                            // Validate form data
+                            if (!image || !title || !description || !client || !client_URL || !category) {
+                                document.getElementById('portfolioMessage').innerText = 'Please fill in all the fields.';
+                                setTimeout(() => {
+                                    document.getElementById('portfolioMessage').innerText = '';
+                                }, 3000);
+    
+                                return;
+                            }
 
                             // Make the POST request to the API
                             const response = await fetch(`${apiUrl}portfolio`, {
@@ -140,7 +160,7 @@ function portfolioINPUT() {
                             document.getElementById('portfolioMessage').innerText = result;
                             setTimeout(() => {
                                 document.getElementById('portfolioMessage').innerText = '';
-                            }, 30000);
+                            }, 3000);
 
                             // Reset the form fields
                             portfolioForm.reset();
@@ -159,7 +179,6 @@ function portfolioINPUT() {
     }
 }
 
-
 function aboutINPUT() {
     let aboutExtension = document.getElementById('about-extension');
     let aboutForm = document.getElementById('aboutINPUT');
@@ -176,7 +195,6 @@ function aboutINPUT() {
                 .then(html => {
                     const domParser = new DOMParser();
                     const parsedDoc = domParser.parseFromString(html, 'text/html');
-
                     while (parsedDoc.body.firstChild) {
                         aboutExtension.appendChild(document.adoptNode(parsedDoc.body.firstChild));
                     }
@@ -195,6 +213,10 @@ function aboutINPUT() {
                             // Validate form data
                             if (!image || !year || !title || !description) {
                                 document.getElementById('aboutMessage').innerText = 'Please fill in all the fields.';
+                                setTimeout(() => {
+                                    document.getElementById('aboutMessage').innerText = '';
+                                }, 3000);
+    
                                 return;
                             }
 
