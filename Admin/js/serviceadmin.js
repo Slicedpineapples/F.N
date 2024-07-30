@@ -78,4 +78,68 @@ function serviceINPUT() {
         serviceExtension.style.display = "none";
     }
 }
+// Function to show all services
+async function showAllServices() {
+    const servicesContainer = document.getElementById('all-services-list');
 
+    if (!servicesContainer) {
+        console.error('Element with ID "all-services-list" not found.');
+        return;
+    }
+
+    try {
+        // Fetch services from the API using POST method
+        const response = await fetch(`${apiUrl}services`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json', 
+                'Accept': 'application/json' 
+            },
+            body: JSON.stringify({ operation: 'OUTPUT' }) // Send the operation as part of the request body
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const services = await response.json();
+
+        // Clear previous content
+        servicesContainer.innerHTML = '';
+
+        // Create and append elements for each service
+        services.forEach(service => {
+            const serviceDiv = document.createElement('div');
+            serviceDiv.classList.add('service-item');
+            serviceDiv.setAttribute('data-id', service.About_ID);
+
+            // Create and append service details
+            const image = document.createElement('img');
+            image.src = `path/to/images/${service.About_Image}`; // Adjust path as needed
+            image.alt = service.About_Title;
+            image.style.width = '100px'; // Example style, adjust as needed
+            image.style.height = 'auto'; // Example style, adjust as needed
+            serviceDiv.appendChild(image);
+
+            const title = document.createElement('h3');
+            title.innerText = service.About_Title;
+            serviceDiv.appendChild(title);
+
+            const description = document.createElement('p');
+            description.innerText = service.About_Description;
+            serviceDiv.appendChild(description);
+
+            const year = document.createElement('p');
+            year.innerText = `Year: ${service.About_Year}`;
+            serviceDiv.appendChild(year);
+
+            // Append the service item to the container
+            servicesContainer.appendChild(serviceDiv);
+        });
+    } catch (error) {
+        console.error('Error fetching services:', error);
+    }
+}
+
+// Call the function to display services when the page loads
+document.addEventListener('DOMContentLoaded', showAllServices);
