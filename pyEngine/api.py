@@ -10,8 +10,9 @@ CORS(app)
 @app.route('/service', methods=['POST'])
 def service():
     data = request.get_json()
-    if data['operation'] == 'INPUT': # The api with the opration will look like http://localhost:5001/service/INPUT
-        serviceINPUT(data['service_Image'], data['service_Title'], data['service_Description'])
+    if data['operation'] == 'INPUT':
+        result = jsonify(serviceINPUT(data['service_Image'], data['service_Title'], data['service_Description']))
+        return result
     elif data['operation'] == 'UPDATE':
         serviceUPDATE(data['service_ID'], data['service_Title'], data['service_Description'])
     elif data['operation'] == 'DELETE':

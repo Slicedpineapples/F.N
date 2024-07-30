@@ -14,8 +14,9 @@ def serviceINPUT(service_Image, service_Title, service_Description):
     Values = (service_Image, service_Title, service_Description)
     cursor.execute(sql, Values)
     service.commit()
-    print("Service details inserted successfully")
+    message = "Service details inserted successfully"
     cursor.close()
+    return message
 
 def serviceUPDATE(service_ID, service_Title, service_Description):
     # print("serviceUPDATE")
