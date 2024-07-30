@@ -10,8 +10,9 @@ def aboutINPUT(about_Year, about_Title, about_Description, about_Image):
     Values = (about_Year, about_Title, about_Description, about_Image)
     cursor.execute(sql, Values)
     about.commit()
-    print("About details inserted successfully")
+    message = "About details inserted successfully"
     cursor.close()
+    return message
 
 def aboutUPDATE(about_ID, about_Year, about_Title, about_Description, about_Image):
     print("aboutUPDATE")

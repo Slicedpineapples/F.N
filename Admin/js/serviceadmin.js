@@ -158,3 +158,87 @@ function portfolioINPUT() {
         portfolioExtension.style.display = "none";
     }
 }
+
+
+function aboutINPUT() {
+    let aboutExtension = document.getElementById('about-extension');
+    let aboutForm = document.getElementById('aboutINPUT');
+
+    if (!aboutExtension) {
+        console.error('Element with ID "about-extension" not found.');
+        return;
+    }
+
+    if (aboutExtension.style.display === "none" || !aboutForm) {
+        if (!aboutForm) {
+            fetch('templates/about.html')
+                .then(response => response.text())
+                .then(html => {
+                    const domParser = new DOMParser();
+                    const parsedDoc = domParser.parseFromString(html, 'text/html');
+
+                    while (parsedDoc.body.firstChild) {
+                        aboutExtension.appendChild(document.adoptNode(parsedDoc.body.firstChild));
+                    }
+
+                    aboutForm = document.getElementById('aboutINPUT');
+                    if (aboutForm) {
+                        aboutForm.addEventListener('submit', async (e) => {
+                            e.preventDefault();
+
+                            // Retrieve form data
+                            const year = document.getElementById('year').value.trim();
+                            const title = document.getElementById('title').value.trim();
+                            const description = document.getElementById('description').value.trim();
+                            const image = document.getElementById('image').value.trim();
+
+                            // Validate form data
+                            if (!image || !year || !title || !description) {
+                                document.getElementById('aboutMessage').innerText = 'Please fill in all the fields.';
+                                return;
+                            }
+
+                            try {
+                                const response = await fetch(`${apiUrl}about`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        'about_Year': year,
+                                        'about_Title': title,
+                                        'about_Description': description,
+                                        'about_Image': image,
+                                        'operation': 'INPUT'
+                                    })
+                                });
+
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+
+                                const result = await response.json();
+                                document.getElementById('aboutMessage').innerText = result;
+                                setTimeout(() => {
+                                    document.getElementById('aboutMessage').innerText = '';
+                                }, 3000);
+                                aboutForm.reset();
+                            } catch (error) {
+                                console.error('Error submitting about item:', error);
+                                document.getElementById('aboutMessage').innerText = 'Error submitting about item.';
+                            }
+                        });
+                    } else {
+                        console.error('Form element not found after fetching template.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching the template:', error);
+                });
+        }
+        aboutExtension.style.display = "block";
+    } else {
+        aboutExtension.style.display = "none";
+    }
+}
