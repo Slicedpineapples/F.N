@@ -78,3 +78,4 @@ function serviceINPUT() {
         serviceExtension.style.display = "none";
     }
 }
+
