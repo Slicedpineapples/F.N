@@ -78,68 +78,83 @@ function serviceINPUT() {
         serviceExtension.style.display = "none";
     }
 }
-// Function to show all services
-async function showAllServices() {
-    const servicesContainer = document.getElementById('all-services-list');
 
-    if (!servicesContainer) {
-        console.error('Element with ID "all-services-list" not found.');
+function portfolioINPUT() {
+    let portfolioExtension = document.getElementById('portfolio-extension');
+    let portfolioForm = document.getElementById('portfolioINPUT');
+
+    // Check if portfolioExtension exists
+    if (!portfolioExtension) {
+        console.error('Element with ID "portfolio-extension" not found.');
         return;
     }
 
-    try {
-        // Fetch services from the API using POST method
-        const response = await fetch(`${apiUrl}services`, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json', 
-                'Accept': 'application/json' 
-            },
-            body: JSON.stringify({ operation: 'OUTPUT' }) // Send the operation as part of the request body
-        });
+    if (portfolioExtension.style.display === "none" || !portfolioForm) {
+        if (!portfolioForm) {
+            fetch('templates/portfolio.html') 
+            .then(response => response.text())
+            .then(html => {
+                const domParser = new DOMParser();
+                const parsedDoc = domParser.parseFromString(html, 'text/html');
+                // console.log('Fetched HTML:', html); // Log the fetched HTML content
+                
+                    // Append all child nodes from parsedDoc to portfolioExtension
+                    while (parsedDoc.body.firstChild) {
+                        portfolioExtension.appendChild(document.adoptNode(parsedDoc.body.firstChild));
+                    }
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+                    // Ensure DOM is updated before adding event listener
+                    portfolioForm = document.getElementById('portfolioINPUT');
+                    if (portfolioForm) {
+                        portfolioForm.addEventListener('submit', async (e) => {
+                            e.preventDefault();
+
+                            // Collect form data
+                            const image = document.getElementById('image').value.trim();
+                            const title = document.getElementById('title').value.trim();
+                            const description = document.getElementById('description').value.trim();
+                            const client = document.getElementById('client').value.trim();
+                            const client_URL = document.getElementById('client_URL').value.trim();
+                            const category = document.getElementById('category').value.trim();
+
+                            // Make the POST request to the API
+                            const response = await fetch(`${apiUrl}portfolio`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    'portfolio_Image': image,
+                                    'portfolio_Title': title,
+                                    'portfolio_Long_Description': description,
+                                    'Client': client,
+                                    'Client_URL': client_URL,
+                                    'Category': category,
+                                    'operation': 'INPUT'
+                                })
+                            });
+
+                            const result = await response.json();
+                            console.log(result);
+                            document.getElementById('portfolioMessage').innerText = result;
+                            setTimeout(() => {
+                                document.getElementById('portfolioMessage').innerText = '';
+                            }, 30000);
+
+                            // Reset the form fields
+                            portfolioForm.reset();
+                        });
+                    } else {
+                        console.error('Form element not found after fetching template.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching the template:', error);
+                });
         }
-
-        const services = await response.json();
-
-        // Clear previous content
-        servicesContainer.innerHTML = '';
-
-        // Create and append elements for each service
-        services.forEach(service => {
-            const serviceDiv = document.createElement('div');
-            serviceDiv.classList.add('service-item');
-            serviceDiv.setAttribute('data-id', service.About_ID);
-
-            // Create and append service details
-            const image = document.createElement('img');
-            image.src = `path/to/images/${service.About_Image}`; // Adjust path as needed
-            image.alt = service.About_Title;
-            image.style.width = '100px'; // Example style, adjust as needed
-            image.style.height = 'auto'; // Example style, adjust as needed
-            serviceDiv.appendChild(image);
-
-            const title = document.createElement('h3');
-            title.innerText = service.About_Title;
-            serviceDiv.appendChild(title);
-
-            const description = document.createElement('p');
-            description.innerText = service.About_Description;
-            serviceDiv.appendChild(description);
-
-            const year = document.createElement('p');
-            year.innerText = `Year: ${service.About_Year}`;
-            serviceDiv.appendChild(year);
-
-            // Append the service item to the container
-            servicesContainer.appendChild(serviceDiv);
-        });
-    } catch (error) {
-        console.error('Error fetching services:', error);
+        portfolioExtension.style.display = "block";
+    } else {
+        portfolioExtension.style.display = "none";
     }
 }
-
-// Call the function to display services when the page loads
-document.addEventListener('DOMContentLoaded', showAllServices);

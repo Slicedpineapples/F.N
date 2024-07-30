@@ -10,8 +10,9 @@ def portfolioINPUT(portfolio_Image, portfolio_Title, portfolio_Long_Description,
     Values = (portfolio_Image, portfolio_Title, portfolio_Long_Description, Client, Client_URL, Category)
     cursor.execute(sql, Values)
     portfolio.commit()
-    print("Portfolio details inserted successfully")
+    message = "Portfolio details inserted successfully"
     cursor.close()
+    return message
 
 # portfolioINPUT(
 #     "test.jpg",
