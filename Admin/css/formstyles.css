@@ -1,0 +1,72 @@
+#aboutINPUT, #portfolioINPUT, #serviceINPUT {
+    display: flex;
+    flex-direction: column;
+    width: 350px; /* Increased width for all forms */
+    margin: 0 auto; /* Center the form on the page */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+#aboutINPUT label, #portfolioINPUT label, #serviceINPUT label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+#aboutINPUT input[type="file"],
+#aboutINPUT input[type="date"],
+#aboutINPUT input[type="text"],
+#aboutINPUT textarea,
+#portfolioINPUT input[type="file"],
+#portfolioINPUT input[type="date"],
+#portfolioINPUT input[type="text"],
+#portfolioINPUT textarea,
+#serviceINPUT input[type="file"],
+#serviceINPUT input[type="date"],
+#serviceINPUT input[type="text"],
+#serviceINPUT textarea {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#aboutINPUT textarea,
+#portfolioINPUT textarea,
+#serviceINPUT textarea {
+    resize: vertical;
+    min-height: 100px; /* Adjust height as needed */
+}
+
+#aboutINPUT input[type="submit"],
+#portfolioINPUT input[type="submit"],
+#serviceINPUT input[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#aboutINPUT input[type="submit"]:hover,
+#portfolioINPUT input[type="submit"]:hover,
+#serviceINPUT input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#aboutMessage,
+#portfolioMessage,
+#serviceMessage {
+    margin-top: 10px;
+    font-size: 14px;
+    color: red; /* Change color as needed */
+}
