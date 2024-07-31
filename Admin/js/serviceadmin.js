@@ -266,13 +266,9 @@ function aboutINPUT() {
 }
 
 async function allServices() {
-    let allserviceExtension = document.getElementById('all-services-extension');
+    let serviceExtension = document.getElementById('all-services-extension');
 
-    if (allserviceExtension.style.display === 'block') {
-        // Hide the services table
-        allserviceExtension.style.display = 'none';
-    } else {
-        try {
+    try {
             // Fetch data from the API
             const response = await fetch(`${apiUrl}service`, {
                 method: 'POST',
@@ -293,7 +289,7 @@ async function allServices() {
             // console.log(apiData);
 
             // Clear previous content
-            allserviceExtension.innerHTML = '';
+            serviceExtension.innerHTML = '';
 
             // Create table element
             let table = document.createElement('table');
@@ -361,15 +357,15 @@ async function allServices() {
             });
 
             table.appendChild(tbody);
-            allserviceExtension.appendChild(table);
+            serviceExtension.appendChild(table);
 
-            // Show the services table
-            allserviceExtension.style.display = 'block';
+            serviceExtension.style.display = 'block';
 
         } catch (error) {
             console.error('Error fetching or displaying data:', error);
         }
-    }
+
+    
 }
 
 async function deleteService(service_ID) {
@@ -404,4 +400,4 @@ function updateService(service) {
     // console.log('Update service:', service); // To complete
 }
 // Call the function to load and display the services when the card is clicked
-document.querySelector('.card.service-card').addEventListener('click', allServices);
+// document.querySelector('.card.service-card').addEventListener('click', allServices);
