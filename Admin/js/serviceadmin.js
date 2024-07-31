@@ -554,3 +554,4 @@ async function deletePortfolio(portfolio_ID) {
         console.error('Error deleting portfolio:', error);
     }
 }
+// function allAbout
