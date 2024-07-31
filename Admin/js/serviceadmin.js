@@ -399,5 +399,158 @@ async function deleteService(service_ID) {
 function updateService(service) {
     // console.log('Update service:', service); // To complete
 }
-// Call the function to load and display the services when the card is clicked
-// document.querySelector('.card.service-card').addEventListener('click', allServices);
+async function allPortfolio() {
+    let portfolioExtension = document.getElementById('all-portfolio-extension');
+
+    // Check if the element exists
+    if (!portfolioExtension) {
+        console.error('Element with ID "all-portfolio-extension" not found.');
+        return;
+    }
+
+    try {
+        // Fetch data from the API
+        const response = await fetch(`${apiUrl}portfolio`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 'operation': 'OUTPUT' })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        // Parse JSON data
+        const apiData = await response.json();
+        // console.log(apiData);
+
+        // Clear previous content
+        portfolioExtension.innerHTML = '';
+
+        // Create table element
+        let table = document.createElement('table');
+        table.classList.add('table', 'table-striped', 'table-bordered');
+
+        // Create table header
+        let thead = document.createElement('thead');
+        let headerRow = document.createElement('tr');
+
+        let headers = ['Portfolio ID', 'Portfolio Title', 'Portfolio Description', 'Client', 'Client URL', 'Category', 'Portfolio Image', 'Actions'];
+        headers.forEach(headerText => {
+            let th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // Create table body
+        let tbody = document.createElement('tbody');
+
+        apiData.forEach(portfolio => {
+            let row = document.createElement('tr');
+
+            let cellID = document.createElement('td');
+            cellID.textContent = portfolio.Portfolio_ID || 'N/A'; // Handle missing data
+            row.appendChild(cellID);
+
+            let cellTitle = document.createElement('td');
+            cellTitle.textContent = portfolio.Portfolio_Title || 'N/A'; // Handle missing data
+            row.appendChild(cellTitle);
+
+            let cellDescription = document.createElement('td');
+            cellDescription.textContent = portfolio.Portfolio_Long_Description || 'N/A'; // Handle missing data
+            row.appendChild(cellDescription);
+
+            let cellClient = document.createElement('td');
+            cellClient.textContent = portfolio.Client || 'N/A'; // Handle missing data
+            row.appendChild(cellClient);
+
+            let cellClientURL = document.createElement('td');
+            cellClientURL.textContent = portfolio.Client_URL || 'N/A'; // Handle missing data
+            row.appendChild(cellClientURL);
+
+            let cellCategory = document.createElement('td');
+            cellCategory.textContent = portfolio.Category || 'N/A'; // Handle missing data
+            row.appendChild(cellCategory);
+
+            // Handle portfolio image
+            let cellImage = document.createElement('td');
+            let img = document.createElement('img');
+            img.src = portfolio.Portfolio_Image || ''; // Handle missing image
+            img.alt = portfolio.Portfolio_Title || 'Image';
+            img.style.width = '100px'; // Adjust size as needed
+            cellImage.appendChild(img);
+            row.appendChild(cellImage);
+
+            // Create actions cell
+            let cellActions = document.createElement('td');
+
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+            deleteButton.onclick = () => deletePortfolio(portfolio.Portfolio_ID);
+            deleteButton.onclick = () => {
+                if (confirm('Are you sure you want to delete this portfolio?')) {
+                    deletePortfolio(portfolio.Portfolio_ID);
+                }
+            };
+            
+
+            // Optionally add an update button
+            // let updateButton = document.createElement('button');
+            // updateButton.textContent = 'Update';
+            // updateButton.classList.add('btn', 'btn-warning', 'btn-sm');
+            // updateButton.onclick = () => updatePortfolio(portfolio);
+
+            cellActions.appendChild(deleteButton);
+            // cellActions.appendChild(updateButton);
+
+            row.appendChild(cellActions);
+
+            tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+        portfolioExtension.appendChild(table);
+
+        // Optionally, show the portfolioExtension if it was hidden
+        portfolioExtension.style.display = 'block';
+
+    } catch (error) {
+        console.error('Error fetching or displaying data:', error);
+    }
+}
+async function deletePortfolio(portfolio_ID) {
+    try {
+        const response = await fetch(`${apiUrl}portfolio`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                'operation': 'DELETE', 
+                'portfolio_ID': portfolio_ID 
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        // Parse JSON response
+        const result = await response.json();
+        // console.log('Delete result:', result);
+
+        // Refresh the portfolio list
+        allPortfolio();
+
+    } catch (error) {
+        console.error('Error deleting portfolio:', error);
+    }
+}
