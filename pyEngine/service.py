@@ -52,16 +52,17 @@ def serviceOUTPUT():
     service = connect()
     cursor = service.cursor()
 
-    sql = "SELECT service_Image, service_Title, service_Description FROM services"
+    sql = "SELECT * FROM services"
     cursor.execute(sql)
     result = cursor.fetchall()
 
     output = []
     for row in result:
         output.append({
-            "service_Image": row[0],
-            "service_Title": row[1],
-            "service_Description": row[2]
+            "service_ID": row[0],
+            "service_Image": row[1],
+            "service_Title": row[2],
+            "service_Description": row[3]
         })
 
     cursor.close()

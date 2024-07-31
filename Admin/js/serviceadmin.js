@@ -156,7 +156,7 @@ function portfolioINPUT() {
                             });
 
                             const result = await response.json();
-                            console.log(result);
+                            // console.log(result);
                             document.getElementById('portfolioMessage').innerText = result;
                             setTimeout(() => {
                                 document.getElementById('portfolioMessage').innerText = '';
@@ -266,110 +266,142 @@ function aboutINPUT() {
 }
 
 async function allServices() {
-    let serviceExtension = document.getElementById('all-services-extension');
+    let allserviceExtension = document.getElementById('all-services-extension');
 
+    if (allserviceExtension.style.display === 'block') {
+        // Hide the services table
+        allserviceExtension.style.display = 'none';
+    } else {
+        try {
+            // Fetch data from the API
+            const response = await fetch(`${apiUrl}service`, {
+                method: 'POST',
+                headers: { 
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 'operation': 'OUTPUT' })
+            });
+
+            // Check if the response is OK
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Parse JSON data
+            const apiData = await response.json();
+            // console.log(apiData);
+
+            // Clear previous content
+            allserviceExtension.innerHTML = '';
+
+            // Create table element
+            let table = document.createElement('table');
+            table.classList.add('table', 'table-striped', 'table-bordered');
+
+            // Create table header
+            let thead = document.createElement('thead');
+            let headerRow = document.createElement('tr');
+
+            let headers = ['Service ID', 'Service Title', 'Service Description', 'Service Image', 'Actions'];
+            headers.forEach(headerText => {
+                let th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            // Create table body
+            let tbody = document.createElement('tbody');
+
+            apiData.forEach(service => {
+                let row = document.createElement('tr');
+
+                let cellID = document.createElement('td');
+                cellID.textContent = service.service_ID;
+                row.appendChild(cellID);
+
+                let cellTitle = document.createElement('td');
+                cellTitle.textContent = service.service_Title;
+                row.appendChild(cellTitle);
+
+                let cellDescription = document.createElement('td');
+                cellDescription.textContent = service.service_Description;
+                row.appendChild(cellDescription);
+
+                let cellImage = document.createElement('td');
+                let img = document.createElement('img');
+                img.src = service.service_Image; 
+                img.alt = service.service_Title;
+                img.style.width = '50px';  
+                cellImage.appendChild(img);
+                row.appendChild(cellImage);
+
+                // Create actions cell
+                let cellActions = document.createElement('td');
+
+                let deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+                deleteButton.onclick = () => deleteService(service.service_ID);
+
+                // let updateButton = document.createElement('button');
+                // updateButton.textContent = 'Update';
+                // updateButton.classList.add('btn', 'btn-warning', 'btn-sm');
+                // updateButton.onclick = () => updateService(service);
+
+                cellActions.appendChild(deleteButton);
+                // cellActions.appendChild(updateButton);
+
+                row.appendChild(cellActions);
+
+                tbody.appendChild(row);
+            });
+
+            table.appendChild(tbody);
+            allserviceExtension.appendChild(table);
+
+            // Show the services table
+            allserviceExtension.style.display = 'block';
+
+        } catch (error) {
+            console.error('Error fetching or displaying data:', error);
+        }
+    }
+}
+
+async function deleteService(service_ID) {
     try {
-        // Fetch data from the API
         const response = await fetch(`${apiUrl}service`, {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ 'operation': 'OUTPUT' })
+            body: JSON.stringify({ 
+                'operation': 'DELETE', 
+                'service_ID': service_ID 
+            })
         });
 
-        // Check if the response is OK
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
 
-        // Parse JSON data
-        const apiData = await response.json();
-        console.log(apiData);
-
-        // Clear previous content
-        serviceExtension.innerHTML = '';
-
-        // Create table element
-        let table = document.createElement('table');
-        table.classList.add('table', 'table-striped', 'table-bordered');
-
-        // Create table header
-        let thead = document.createElement('thead');
-        let headerRow = document.createElement('tr');
-
-        let headers = ['Service Title', 'Service Description', 'Service Image', 'Actions'];
-        headers.forEach(headerText => {
-            let th = document.createElement('th');
-            th.textContent = headerText;
-            headerRow.appendChild(th);
-        });
-
-        thead.appendChild(headerRow);
-        table.appendChild(thead);
-
-        // Create table body
-        let tbody = document.createElement('tbody');
-
-        apiData.forEach(service => {
-            let row = document.createElement('tr');
-
-            let cellTitle = document.createElement('td');
-            cellTitle.textContent = service.service_Title;
-            row.appendChild(cellTitle);
-
-            let cellDescription = document.createElement('td');
-            cellDescription.textContent = service.service_Description;
-            row.appendChild(cellDescription);
-
-            let cellImage = document.createElement('td');
-            let img = document.createElement('img');
-            img.src = service.service_Image; 
-            img.alt = service.service_Title;
-            img.style.width = '50px';  
-            cellImage.appendChild(img);
-            row.appendChild(cellImage);
-
-            // Create actions cell
-            let cellActions = document.createElement('td');
-
-            let deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
-            deleteButton.onclick = () => deleteService(service);
-
-            let updateButton = document.createElement('button');
-            updateButton.textContent = 'Update';
-            updateButton.classList.add('btn', 'btn-warning', 'btn-sm');
-            updateButton.onclick = () => updateService(service);
-
-            cellActions.appendChild(deleteButton);
-            cellActions.appendChild(updateButton);
-
-            row.appendChild(cellActions);
-
-            tbody.appendChild(row);
-        });
-
-        table.appendChild(tbody);
-        serviceExtension.appendChild(table);
-
-        serviceExtension.style.display = 'block';
+        const result = await response.json();
+        // console.log('Delete result:', result);
+        // Refresh the table
+        allServices();
 
     } catch (error) {
-        console.error('Error fetching or displaying data:', error);
+        console.error('Error deleting service:', error);
     }
 }
 
-function deleteService(service) {
-    console.log('Delete service:', service);
-}
-
 function updateService(service) {
-    console.log('Update service:', service);
+    // console.log('Update service:', service); // To complete
 }
-
 // Call the function to load and display the services when the card is clicked
 document.querySelector('.card.service-card').addEventListener('click', allServices);
-

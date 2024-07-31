@@ -12,3 +12,37 @@
     <input type="submit" value="Submit">
     <div id="serviceMessage"></div>
 </form>
+
+<!-- Update Service Modal -->
+<div class="modal fade" id="updateServiceModal" tabindex="-1" aria-labelledby="updateServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateServiceModalLabel">Update Service</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="updateServiceForm">
+            <input type="hidden" id="updateServiceID">
+            <div class="mb-3">
+              <label for="updateServiceTitle" class="form-label">Service Title</label>
+              <input type="text" class="form-control" id="updateServiceTitle" required>
+            </div>
+            <div class="mb-3">
+              <label for="updateServiceDescription" class="form-label">Service Description</label>
+              <textarea class="form-control" id="updateServiceDescription" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="updateServiceImage" class="form-label">Service Image URL</label>
+              <input type="text" class="form-control" id="updateServiceImage" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="submitUpdate()">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
