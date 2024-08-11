@@ -12,7 +12,7 @@ function showSection(sectionId) {
 }
 
 function showServiceForm(formType) {
-    const forms = ['add-service-form', 'update-service-form', 'delete-service-form', 'all-services-list'];
+    const forms = ['add-service-form', 'update-service-form', 'delete-service-form', 'all-services-list', 'all-profile-items'];
 
     forms.forEach(id => {
         const element = document.getElementById(id);

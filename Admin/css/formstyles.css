@@ -1,4 +1,4 @@
-#aboutINPUT, #portfolioINPUT, #serviceINPUT {
+#aboutINPUT, #portfolioINPUT, #serviceINPUT, #profileINPUT {
     display: flex;
     flex-direction: column;
     width: 350px; /* Increased width for all forms */
@@ -10,7 +10,7 @@
     background-color: #f9f9f9;
 }
 
-#aboutINPUT label, #portfolioINPUT label, #serviceINPUT label {
+#aboutINPUT label, #portfolioINPUT label, #serviceINPUT label, #profileINPUT label {
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;
@@ -27,7 +27,11 @@
 #serviceINPUT input[type="file"],
 #serviceINPUT input[type="date"],
 #serviceINPUT input[type="text"],
-#serviceINPUT textarea {
+#serviceINPUT textarea,
+#profileINPUT input[type="file"],
+#profileINPUT input[type="date"],
+#profileINPUT input[type="text"],
+#profileINPUT textarea {
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -39,14 +43,16 @@
 
 #aboutINPUT textarea,
 #portfolioINPUT textarea,
-#serviceINPUT textarea {
+#serviceINPUT textarea,
+#profileINPUT textarea {
     resize: vertical;
     min-height: 100px; /* Adjust height as needed */
 }
 
 #aboutINPUT input[type="submit"],
 #portfolioINPUT input[type="submit"],
-#serviceINPUT input[type="submit"] {
+#serviceINPUT input[type="submit"],
+#profileINPUT input[type="submit"] {
     padding: 10px 20px;
     border: none;
     border-radius: 3px;
@@ -59,13 +65,15 @@
 
 #aboutINPUT input[type="submit"]:hover,
 #portfolioINPUT input[type="submit"]:hover,
-#serviceINPUT input[type="submit"]:hover {
+#serviceINPUT input[type="submit"]:hover,
+#profileINPUT input[type="submit"]:hover {
     background-color: #45a049;
 }
 
 #aboutMessage,
 #portfolioMessage,
-#serviceMessage {
+#serviceMessage,
+#profileMessage {
     margin-top: 10px;
     font-size: 14px;
     color: red; /* Change color as needed */
