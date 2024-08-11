@@ -4,6 +4,7 @@ from service import serviceINPUT, serviceUPDATE, serviceDELETE, serviceOUTPUT
 from portfolio import portfolioINPUT, portfolioUPDATE, portfolioDELETE, portfolioOUTPUT
 from about import aboutINPUT, aboutUPDATE, aboutDELETE, aboutOUTPUT
 from login import login, signUp
+from profile import profileINPUT, profileUPDATE, profileDELETE, profileOUTPUT
 
 app = Flask(__name__)
 CORS(app)
@@ -154,6 +155,46 @@ def loginAPI():
             return jsonify(result), 200
         else:
             return jsonify({'error': 'Missing required fields'}), 400
+
+    return jsonify({'error': 'Invalid operation'}), 400
+
+@app.route('/profile', methods=['POST'])
+def profile():
+    data = request.get_json()
+    
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
+
+    operation = data.get('operation')
+    if not operation:
+        return jsonify({'error': 'Operation not specified'}), 400
+
+    if operation == 'INPUT':
+        required_fields = ['profile_Intro1', 'profile_Intro2', 'profile_Continua']
+        if all(field in data for field in required_fields):
+            result = profileINPUT(data['profile_Intro1'], data['profile_Intro2'], data['profile_Continua'])
+            return jsonify(result), 200
+        else:
+            return jsonify({'error': 'Missing required fields'}), 400
+
+    elif operation == 'UPDATE':
+        required_fields = ['profile_ID', 'profile_Intro1', 'profile_Intro2', 'profile_Continua']
+        if all(field in data for field in required_fields):
+            profileUPDATE(data['profile_ID'], data['profile_Intro1'], data['profile_Intro2'], data['profile_Continua'])
+            return jsonify({'status': 'Profile updated successfully'}), 200
+        else:
+            return jsonify({'error': 'Missing required fields'}), 400
+
+    elif operation == 'DELETE':
+        if 'profile_ID' in data:
+            profileDELETE(data['profile_ID'])
+            return jsonify({'status': 'Profile deleted successfully'}), 200
+        else:
+            return jsonify({'error': 'Profile ID not provided'}), 400
+
+    elif operation == 'OUTPUT':
+        result = profileOUTPUT()
+        return jsonify(result), 200
 
     return jsonify({'error': 'Invalid operation'}), 400
 
