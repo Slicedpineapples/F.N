@@ -187,6 +187,7 @@ def profile():
 
     elif operation == 'DELETE':
         if 'profile_ID' in data:
+            # print(data['profile_ID'])
             profileDELETE(data['profile_ID'])
             return jsonify({'status': 'Profile deleted successfully'}), 200
         else:

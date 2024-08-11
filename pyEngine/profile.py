@@ -14,11 +14,6 @@ def profileINPUT(profile_Intro1, profile_Intro2, profile_Continua):
     cursor.close()
     return message
 
-# profileINPUT(
-#     "Profile Intro 1",
-#     "Profile Intro 2",
-#     "Profile Continua"
-# )
 
 def profileUPDATE(profile_ID, profile_Intro1, profile_Intro2, profile_Continua):
     print("profileUPDATE")
@@ -43,8 +38,9 @@ def profileDELETE(profile_ID):
     Values = (profile_ID,)
     cursor.execute(sql, Values)
     profile.commit()
-    print("Profile details deleted successfully")
+    # message = ("Profile details deleted successfully")
     cursor.close()
+
 
 def profileOUTPUT():
     print("profileOUTPUT")
@@ -55,6 +51,15 @@ def profileOUTPUT():
     sql = "SELECT * FROM profile"
     cursor.execute(sql)
     result = cursor.fetchall()
-    return result
 
+    output = []
+    for row in result:
+        output.append({
+            'profile_ID': row[0],
+            'profile_Intro1': row[1],
+            'profile_Intro2': row[2],
+            'profile_Continua': row[3]
+        })
+    cursor.close()
+    return output
 # print(profileOUTPUT())

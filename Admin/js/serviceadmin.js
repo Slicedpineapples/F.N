@@ -344,9 +344,6 @@ function profileINPUT() {
         profileExtension.style.display = "none";
     }
 }
-
-
-
 async function allServices() {
     let serviceExtension = document.getElementById('all-services-extension');
 
@@ -777,5 +774,140 @@ async function deleteAbout(about_ID) {
 
     } catch (error) {
         console.error('Error deleting entry:', error);
+    }
+}
+async function allProfile() {
+    let profileExtension = document.getElementById('all-profile-extension');
+    // console.log(profileExtension);
+    // Check if the element exists
+    if (!profileExtension) {
+        console.error('Element with ID "all-profile-extension" not found.');
+        return;
+    }
+
+    try {
+        // Fetch data from the API
+        const response = await fetch(`${apiUrl}profile`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 'operation': 'OUTPUT' })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        // Parse JSON data
+        const profileData = await response.json();
+        // console.log(profileData);
+
+        // Clear previous content
+        profileExtension.innerHTML = '';
+
+        // Create table element
+        let table = document.createElement('table');
+        table.classList.add('table', 'table-striped', 'table-bordered');
+
+        // Create table header
+        let thead = document.createElement('thead');
+        let headerRow = document.createElement('tr');
+
+        let headers = ['Profile ID', 'Intro1', 'Intro2', 'Continua', 'Actions'];
+        headers.forEach(headerText => {
+            let th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // Create table body
+        let tbody = document.createElement('tbody');
+
+        profileData.forEach(profile => {
+            let row = document.createElement('tr');
+
+            let cellID = document.createElement('td');
+            cellID.textContent = profile.profile_ID || 'N/A'; // Handle missing data
+            row.appendChild(cellID);
+
+            let cellIntro1 = document.createElement('td');
+            cellIntro1.textContent = profile.profile_Intro1 || 'N/A'; // Handle missing data
+            row.appendChild(cellIntro1);
+
+            let cellIntro2 = document.createElement('td');
+            cellIntro2.textContent = profile.profile_Intro2 || 'N/A'; // Handle missing data
+            row.appendChild(cellIntro2);
+
+            let cellContinua = document.createElement('td');
+            cellContinua.textContent = profile.profile_Continua || 'N/A'; // Handle missing data
+            row.appendChild(cellContinua);
+
+            let cellActions = document.createElement('td');
+
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+            deleteButton.onclick = () => {
+                if (confirm('Are you sure you want to delete this item? This action is irreversible.')) {
+                    deleteProfile(profile.profile_ID);
+                }
+            };
+
+            // Optionally add an update button
+            // let updateButton = document.createElement('button');
+            // updateButton.textContent = 'Update';
+            // updateButton.classList.add('btn', 'btn-warning', 'btn-sm');
+            // updateButton.onclick = () => updateProfile(profile);
+
+            cellActions.appendChild(deleteButton);
+            // cellActions.appendChild(updateButton);
+
+            row.appendChild(cellActions);
+
+            tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+        profileExtension.appendChild(table);
+
+        // Optionally, show the profileExtension if it was hidden
+        profileExtension.style.display = 'block';
+
+    } catch (error) {
+        console.error('Error fetching or displaying data:', error);
+    }
+}
+async function deleteProfile(profile_ID) {
+    try {
+        const response = await fetch(`${apiUrl}profile`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                'operation': 'DELETE', 
+                'profile_ID': profile_ID 
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        // Parse JSON response
+        const result = await response.json();
+        // console.log('Delete result:', result);
+
+        // Refresh the profile list
+        allProfile();
+
+    } catch (error) {
+        console.error('Error deleting profile:', error);
     }
 }
