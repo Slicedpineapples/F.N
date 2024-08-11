@@ -1,5 +1,5 @@
 function showSection(sectionId) {
-    const sections = ['services', 'portfolio', 'about'];
+    const sections = ['services', 'portfolio', 'about', 'profile'];
     
     sections.forEach(id => {
         const element = document.getElementById(id);
@@ -31,9 +31,4 @@ function showServiceForm(formType) {
                 document.getElementById('all-services-list').innerHTML = html;
             });
     }
-}
-
-// Handle showing/hiding for Portfolio and About if needed
-function plusIncome() {
-    // Your existing logic for handling income
 }

@@ -262,6 +262,91 @@ function aboutINPUT() {
         aboutExtension.style.display = "none";
     }
 }
+function profileINPUT() {
+    let profileExtension = document.getElementById('profile-extension');
+    let profileForm = document.getElementById('profileINPUT');
+
+    if (!profileExtension) {
+        console.error('Element with ID "profile-extension" not found.');
+        return;
+    }
+
+    if (profileExtension.style.display === "none" || !profileForm) {
+        if (!profileForm) {
+            fetch('templates/profile.html')
+                .then(response => response.text())
+                .then(html => {
+                    const domParser = new DOMParser();
+                    const parsedDoc = domParser.parseFromString(html, 'text/html');
+                    while (parsedDoc.body.firstChild) {
+                        profileExtension.appendChild(document.adoptNode(parsedDoc.body.firstChild));
+                    }
+
+                    profileForm = document.getElementById('profileINPUT');
+                    if (profileForm) {
+                        profileForm.addEventListener('submit', async (e) => {
+                            e.preventDefault();
+
+                            // Retrieve form data
+                            const profileIntro1 = document.getElementById('profile_Intro1').value.trim();
+                            const profileIntro2 = document.getElementById('profile_Intro2').value.trim();
+                            const profileContinua = document.getElementById('profile_Continua').value.trim();
+
+                            // Validate form data
+                            if (!profileIntro1 || !profileIntro2 || !profileContinua) {
+                                document.getElementById('profileMessage').innerText = 'Please fill in all the fields.';
+                                setTimeout(() => {
+                                    document.getElementById('profileMessage').innerText = '';
+                                }, 3000);
+                                return;
+                            }
+
+                            try {
+                                const response = await fetch(`${apiUrl}profile`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        'profile_Intro1': profileIntro1,
+                                        'profile_Intro2': profileIntro2,
+                                        'profile_Continua': profileContinua,
+                                        'operation': 'INPUT'
+                                    })
+                                });
+
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+
+                                const result = await response.json();
+                                document.getElementById('profileMessage').innerText = result;
+                                setTimeout(() => {
+                                    document.getElementById('profileMessage').innerText = '';
+                                }, 3000);
+                                profileForm.reset();
+                            } catch (error) {
+                                console.error('Error submitting profile item:', error);
+                                document.getElementById('profileMessage').innerText = 'Error submitting profile item.';
+                            }
+                        });
+                    } else {
+                        console.error('Form element not found after fetching template.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching the template:', error);
+                });
+        }
+        profileExtension.style.display = "block";
+    } else {
+        profileExtension.style.display = "none";
+    }
+}
+
+
+
 async function allServices() {
     let serviceExtension = document.getElementById('all-services-extension');
 
