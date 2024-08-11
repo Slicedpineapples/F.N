@@ -27,6 +27,7 @@
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('services')">Services</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('portfolio')">Portfolio</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('about')">About</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('profile')">Profile</a>
             </div>
         </div>
         <!-- Page content wrapper-->
@@ -100,6 +101,19 @@
                     </div>
                     
                 </div>
+
+                <div id="profile" class="section" style="display:none;">
+                    <h2>Profile</h2>
+                    <div class="card service-card" onclick="profileINPUT()">
+                        <div class="label">Add Profile Item</div>
+                        <div class="add-btn">+</div>
+                    </div>
+                    <div id="profile-extension" style="display:none;"></div>
+                    <div class="card service-card" onclick="allProfile()">
+                        <div class="label">All Profile</div>
+                        <div class="add-btn">+</div>
+                    <div id="all-profile-extension"  style="display:none;"></div>
+                    </div>
 
             </div>
         </div>
