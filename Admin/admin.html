@@ -24,9 +24,9 @@
                 });
             </script>            
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('services')">Services</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('portfolio')">Portfolio</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('about')">About</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('services')">Focus</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('portfolio')">Highlights</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('about')">The Journey</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" onclick="showSection('profile')">Profile</a>
             </div>
         </div>
@@ -57,15 +57,15 @@
             <!-- Page content-->
             <div class="container-fluid">
                 <div id="services" class="section" style="display:none;">
-                    <h2>Services</h2>
+                    <h2>Focus</h2>
                     <div class="card service-card" onclick="serviceINPUT()">
-                        <div class="label">Add Service Item</div>
+                        <div class="label">Add Item</div>
                         <div class="add-btn">+</div>
                     </div>
                     <div id="service-extension" style="display:none;"></div>
 
                     <div class="card service-card" onclick="allServices()">
-                        <div class="label">All Services</div>
+                        <div class="label">All Items</div>
                         <div class="add-btn">+</div>
                     </div>
                     <div id="all-services-extension"  style="display:none;"></div>
@@ -73,29 +73,29 @@
                 </div>
                 
                 <div id="portfolio" class="section" style="display:none;">
-                    <h2>Portfolio</h2>
+                    <h2>Highlights</h2>
                     <div class="card service-card" onclick="portfolioINPUT()">
-                        <div class="label">Add Portfolio Item</div>
+                        <div class="label">Add Item</div>
                         <div class="add-btn">+</div>
                     </div>
                     <div id="portfolio-extension" style="display:none;"></div>
 
                     <div class="card service-card" onclick="allPortfolio()">
-                        <div class="label">All Portfolio</div>
+                        <div class="label">All Items</div>
                         <div class="add-btn">+</div>
                     <div id="all-portfolio-extension"  style="display:none;"></div>
                 </div>
                 </div>
                 
                 <div id="about" class="section" style="display:none;">
-                    <h2>About</h2>
+                    <h2>The Journey</h2>
                     <div class="card service-card" onclick="aboutINPUT()">
-                        <div class="label">Add About Item</div>
+                        <div class="label">Add Item</div>
                         <div class="add-btn">+</div>
                     </div>
                     <div id="about-extension" style="display:none;"></div>
                     <div class="card service-card" onclick="allAbout()">
-                        <div class="label">All About</div>
+                        <div class="label">All Items</div>
                         <div class="add-btn">+</div>
                     <div id="all-about-extension"  style="display:none;"></div>
                     </div>
@@ -105,12 +105,12 @@
                 <div id="profile" class="section" style="display:none;">
                     <h2>Profile</h2>
                     <div class="card service-card" onclick="profileINPUT()">
-                        <div class="label">Add Profile Item</div>
+                        <div class="label">Add Item</div>
                         <div class="add-btn">+</div>
                     </div>
                     <div id="profile-extension" style="display:none;"></div>
                     <div class="card service-card" onclick="allProfile()">
-                        <div class="label">All Profile</div>
+                        <div class="label">All Items</div>
                         <div class="add-btn">+</div>
                     <div id="all-profile-extension"  style="display:none;"></div>
                     </div>
@@ -118,12 +118,8 @@
             </div>
         </div>
     </div>
-    <!-- Bootstrap core JS-->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
-    <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <script src="js/serviceadmin.js"></script>
-    <!-- <script src="js/portfolioadmin.js"></script> -->
     <script src="js/pop.js"></script>
 </body>
 </html>
