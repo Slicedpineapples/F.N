@@ -1,7 +1,6 @@
 node_modules/
 .json
 server.js
-server.py
 .spec
 .env
 .DS_Store
