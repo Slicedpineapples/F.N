@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="${item.About_Image}" alt="${item.About_Title}" /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                                <h4>${item.About_Year}</h4>
+                                <h6>${item.About_Year}</h6>
                                 <h4 class="subheading">${item.About_Title}</h4>
                             </div>
                             <div class="timeline-body"><p class="text-muted">${item.About_Description}</p></div>
