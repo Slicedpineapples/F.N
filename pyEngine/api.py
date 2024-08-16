@@ -5,9 +5,12 @@ from portfolio import portfolioINPUT, portfolioUPDATE, portfolioDELETE, portfoli
 from about import aboutINPUT, aboutUPDATE, aboutDELETE, aboutOUTPUT
 from login import login, signUp
 from profile import profileINPUT, profileUPDATE, profileDELETE, profileOUTPUT
+import seeder
 
 app = Flask(__name__)
 CORS(app)
+#Seed the database
+seeder.seed()
 
 @app.route('/service', methods=['POST'])
 def service():

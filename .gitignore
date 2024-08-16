@@ -6,3 +6,7 @@ server.js
 .DS_Store
 .exe
 __pycache__/*
+dist/
+build/
+coverage/
+.spec
