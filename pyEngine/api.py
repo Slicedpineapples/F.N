@@ -134,7 +134,7 @@ def about():
     return jsonify({'error': 'Invalid operation'}), 400
 
 @app.route('/login', methods=['POST'])
-def login():
+def loginApi():
     data = request.get_json()
     
     if not data:
