@@ -15,7 +15,7 @@ def signUp(username, password):
         values = (username, password)
         cursor.execute(sql, values)
         signup.commit()
-        message = "User created successfully!"
+        message = "User created successfully!\n Proceed to login."
         
 
     except Exception as e:
@@ -27,8 +27,8 @@ def signUp(username, password):
             cursor.close()
         if signup:
             signup.close()
-    userId = cursor.lastrowid
-    return userId, message
+    # userId = cursor.lastrowid
+    return message
 
 
 def login(username, password):

@@ -134,7 +134,7 @@ def about():
     return jsonify({'error': 'Invalid operation'}), 400
 
 @app.route('/login', methods=['POST'])
-def loginAPI():
+def login():
     data = request.get_json()
     
     if not data:
@@ -161,6 +161,18 @@ def loginAPI():
             return jsonify({'error': 'Missing required fields'}), 400
 
     return jsonify({'error': 'Invalid operation'}), 400
+
+    data = request.get_json()
+    
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
+
+    required_fields = ['username', 'password']
+    if all(field in data for field in required_fields):
+        result = signUp(data['username'], data['password'])
+        return jsonify(result), 200
+    else:
+        return jsonify({'error': 'Missing required fields'}), 400
 
 @app.route('/profile', methods=['POST'])
 def profile():
