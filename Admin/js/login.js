@@ -76,3 +76,4 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         window.location.href = 'login.html'; // Redirect back to login page on error
     }
 });
+
