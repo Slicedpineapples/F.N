@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result === 'User created successfully!\n Proceed to login.') {
 
                 document.getElementById('signupMessage').innerText = result;
-                await new Promise(resolve => setTimeout(resolve, 10000));
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 window.location.href = 'login.html';
             } else {
                 document.getElementById('signupMessage').innerText = result || 'Signup failed. Please try again.';
