@@ -11,6 +11,7 @@ from seeder import seed
 app = Flask(__name__)
 CORS(app)
 #Seed the database
+print('API is running')
 seed()
 
 @app.route('/service', methods=['POST'])
@@ -216,4 +217,4 @@ def profile():
     return jsonify({'error': 'Invalid operation'}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=True, host='0.0.0.0', port=5000)
