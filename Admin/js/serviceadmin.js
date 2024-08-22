@@ -8,9 +8,9 @@ if (!sessionStorage.getItem('username')) {
 const hostname = window.location.hostname;
 let apiUrl;
 if (hostname === 'localhost' || hostname === '127.0.0.1') {
-    apiUrl = 'http://127.0.0.1:5001/';
+    apiUrl = 'https://127.0.0.1:5001/';
 } else {
-    apiUrl = `http://${hostname}:5001/`;
+    apiUrl = `https://${hostname}:5001/`;
 }
 
 function endSession(){

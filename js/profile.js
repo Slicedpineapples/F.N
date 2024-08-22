@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('http://localhost:5001/profile', {
+    fetch('https://localhost:5001/profile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

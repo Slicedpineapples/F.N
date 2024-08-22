@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const hostname = window.location.hostname;
         let apiUrl;
         if (hostname === 'localhost' || hostname === '127.0.0.1') {
-            apiUrl = 'http://127.0.0.1:5001/login';
+            apiUrl = 'https://127.0.0.1:5001/login';
         } else {
-            apiUrl = `http://${hostname}:5001/login`;
+            apiUrl = `https://${hostname}:5001/login`;
         }
 
         try {
