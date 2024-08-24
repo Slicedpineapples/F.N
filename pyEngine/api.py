@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 #Seed the database
 print('API is running')
-#seed()
+seed()
 
 @app.route('/service', methods=['POST'])
 def service():
