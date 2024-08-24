@@ -70,4 +70,4 @@ def login(username, password):
 
 # print(login("helix", "helix")) #Debugging only
 # signUp("slicedpineapples", "Fwtlahapl.123")
-# login("slicedpineapples", "Fwtlahapl.123") #Debugging only
+# print(login("slicedpineapples", "Fwtlahapl.123")) #Debugging only
