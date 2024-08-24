@@ -4,14 +4,7 @@ if (!sessionStorage.getItem('username')) {
     window.location.href = '/';
 }
 
-// Sorting hostname for API URL
-const hostname = window.location.hostname;
-let apiUrl;
-if (hostname === 'localhost' || hostname === '127.0.0.1') {
-    apiUrl = 'https://127.0.0.1:5001/';
-} else {
-    apiUrl = `https://${hostname}:5001/`;
-}
+const api = 'https://f-n-2.onrender.com';
 
 function endSession(){
     sessionStorage.clear();
@@ -60,7 +53,7 @@ function serviceINPUT() {
                                 return;
                             }
 
-                            const response = await fetch(`${apiUrl}service`, {
+                            const response = await fetch(`${api}/service`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                                 body: JSON.stringify({
@@ -137,7 +130,7 @@ function portfolioINPUT() {
                             }
 
                             // Make the POST request to the API
-                            const response = await fetch(`${apiUrl}portfolio`, {
+                            const response = await fetch(`${api}/portfolio`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -219,7 +212,7 @@ function aboutINPUT() {
                             }
 
                             try {
-                                const response = await fetch(`${apiUrl}about`, {
+                                const response = await fetch(`${api}/about`, {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -302,7 +295,7 @@ function profileINPUT() {
                             }
 
                             try {
-                                const response = await fetch(`${apiUrl}profile`, {
+                                const response = await fetch(`${api}/profile`, {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -349,7 +342,7 @@ async function allServices() {
 
     try {
             // Fetch data from the API
-            const response = await fetch(`${apiUrl}service`, {
+            const response = await fetch(`${api}/service`, {
                 method: 'POST',
                 headers: { 
                     'Accept': 'application/json',
@@ -453,7 +446,7 @@ async function allServices() {
 }
 async function deleteService(service_ID) {
     try {
-        const response = await fetch(`${apiUrl}service`, {
+        const response = await fetch(`${api}/service`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -489,7 +482,7 @@ async function allPortfolio() {
 
     try {
         // Fetch data from the API
-        const response = await fetch(`${apiUrl}portfolio`, {
+        const response = await fetch(`${api}/portfolio`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -606,7 +599,7 @@ async function allPortfolio() {
 }
 async function deletePortfolio(portfolio_ID) {
     try {
-        const response = await fetch(`${apiUrl}portfolio`, {
+        const response = await fetch(`${api}/portfolio`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -644,7 +637,7 @@ async function allAbout() {
 
     try {
         // Fetch data from the API
-        const response = await fetch(`${apiUrl}about`, {
+        const response = await fetch(`${api}/about`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -750,7 +743,7 @@ async function allAbout() {
 async function deleteAbout(about_ID) {
     try {
         // Send a delete request to the server
-        const response = await fetch(`${apiUrl}about`, {
+        const response = await fetch(`${api}/about`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -787,7 +780,7 @@ async function allProfile() {
 
     try {
         // Fetch data from the API
-        const response = await fetch(`${apiUrl}profile`, {
+        const response = await fetch(`${api}/profile`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -884,7 +877,7 @@ async function allProfile() {
 }
 async function deleteProfile(profile_ID) {
     try {
-        const response = await fetch(`${apiUrl}profile`, {
+        const response = await fetch(`${api}/profile`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

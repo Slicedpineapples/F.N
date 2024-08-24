@@ -35,18 +35,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
 
-    // Determine the base URL based on the hostname
-    const hostname = window.location.hostname;
-    let apiUrl;
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
-        apiUrl = 'https://127.0.0.1:5001/login';
-    } else {
-        // Change this to your server's IP address or hostname
-        apiUrl = `https://${hostname}:5001/login`;
-    }
+    const api = 'https://f-n-2.onrender.com'
 
     try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(`${api}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ operation: 'LOGIN', username, password })

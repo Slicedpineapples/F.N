@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('https://localhost:5001/profile', {
+    const api = 'https://f-n-2.onrender.com'
+    fetch(`${api}/profile`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
