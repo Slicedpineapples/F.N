@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const api = 'https://f-n-2.onrender.com'
+    const api = 'https://f-n-2.onrender.com';
     fetch(`${api}/portfolio`, {
         method: 'POST',
         headers: {
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="${item.Portfolio_Image}" alt="${item.Portfolio_Title}" />
+                                <img class="img-fluid portfolio-img" src="${item.Portfolio_Image}" alt="${item.Portfolio_Title}" />
                             </a>
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading">${item.Portfolio_Title}</div>
@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .catch(error => console.error('Error fetching portfolio data:', error));
 });
+
 
 // Function to create modal HTML
 function createModalHTML(portfolioItem) {
