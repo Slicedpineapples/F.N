@@ -15,7 +15,7 @@ def connect():
             database = os.getenv('DB_NAME')
         )
     except Exception as e:
-        # print("Error connecting to the database:", str(e)) # Debugging purpose only
+        print("Error connecting to the database:", str(e)) # Debugging purpose only
         print("Oops :(\nSomethinng went wrong.")
     else:
         print("Connection established!") # Debugging purpose only
