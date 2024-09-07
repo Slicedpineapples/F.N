@@ -25,6 +25,32 @@ def seed():
     cursor.execute(f"SHOW DATABASES LIKE '{db_name}'")
     result = cursor.fetchone()
 
+    # Check if About table exists
+    cursor.execute(f"SHOW TABLES FROM {db_name} LIKE 'About'")
+    about_table = cursor.fetchone()
+
+    # Check if Partners table exists
+    cursor.execute(f"SHOW TABLES FROM {db_name} LIKE 'Partners'")
+    partners_table = cursor.fetchone()
+
+    # Check if Portfolio table exists
+    cursor.execute(f"SHOW TABLES FROM {db_name} LIKE 'Portfolio'")
+    portfolio_table = cursor.fetchone()
+
+    # Check if profile table exists
+    cursor.execute(f"SHOW TABLES FROM {db_name} LIKE 'profile'")
+    profile_table = cursor.fetchone()
+
+    # Check if services table exists
+    cursor.execute(f"SHOW TABLES FROM {db_name} LIKE 'services'")
+    services_table = cursor.fetchone()
+
+    # Check if Users table exists
+    cursor.execute(f"SHOW TABLES FROM {db_name} LIKE 'Users'")
+    users_table = cursor.fetchone()
+
+
+
     if result:
         print(f"Database '{db_name}' already exists.")
     else:
@@ -37,18 +63,24 @@ def seed():
 
         # Select the newly created database
         cursor.execute(f"USE {db_name}")
-
-        # Create the About table
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS About (
-            about_ID bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-            about_Year varchar(255) NOT NULL,
-            about_Title varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-            about_Description text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-            about_Image varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-            PRIMARY KEY (about_ID)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        """)
+    
+    if about_table:
+        print("About table already exist.")
+    else:
+        try:
+            # Create the About table
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS About (
+                about_ID bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+                about_Year varchar(255) NOT NULL,
+                about_Title varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                about_Description text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                about_Image varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                PRIMARY KEY (about_ID)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            """)
+            print("About table created.")
+        except Exception as e:
 
         # Create the Partners table
         cursor.execute("""
