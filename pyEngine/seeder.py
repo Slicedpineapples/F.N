@@ -49,8 +49,6 @@ def seed():
     cursor.execute(f"SHOW TABLES FROM {db_name} LIKE 'Users'")
     users_table = cursor.fetchone()
 
-
-
     if result:
         print(f"Database '{db_name}' already exists.")
     else:
@@ -63,98 +61,141 @@ def seed():
 
         # Select the newly created database
         cursor.execute(f"USE {db_name}")
-    
-    if about_table:
-        print("About table already exist.")
+        if about_table:
+            print("About table already exist.")
+        else:
+            try:
+                # Create the About table
+                cursor.execute("""
+                CREATE TABLE IF NOT EXISTS About (
+                    about_ID bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+                    about_Year varchar(255) NOT NULL,
+                    about_Title varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                    about_Description text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                    about_Image varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                    PRIMARY KEY (about_ID)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+                """)
+                print("About table created.")
+            except Exception as e:
+                print("Error creating the About table:", e)
+
+    if partners_table:
+        print("Partners table already exist.")
     else:
-        try:
-            # Create the About table
+        try:        
+            # Create the Partners table
             cursor.execute("""
-            CREATE TABLE IF NOT EXISTS About (
-                about_ID bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-                about_Year varchar(255) NOT NULL,
-                about_Title varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-                about_Description text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-                about_Image varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-                PRIMARY KEY (about_ID)
+            CREATE TABLE IF NOT EXISTS Partners (
+                Partner_ID bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+                Partner_Image varchar(255) NOT NULL,
+                Partner_Name varchar(255) NOT NULL,
+                Partner_Role varchar(255) NOT NULL,
+                Partner_Social1 varchar(255) NOT NULL,
+                Partner_Social2 bigint NOT NULL,
+                Partner_Social3 bigint NOT NULL,
+                PRIMARY KEY (Partner_ID)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             """)
-            print("About table created.")
+            print("Partners table created.")
         except Exception as e:
+            print("Error creating the Partners table:", e)
 
-        # Create the Partners table
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS Partners (
-            Partner_ID bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-            Partner_Image varchar(255) NOT NULL,
-            Partner_Name varchar(255) NOT NULL,
-            Partner_Role varchar(255) NOT NULL,
-            Partner_Social1 varchar(255) NOT NULL,
-            Partner_Social2 bigint NOT NULL,
-            Partner_Social3 bigint NOT NULL,
-            PRIMARY KEY (Partner_ID)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        """)
+    if portfolio_table:
+        print("Portfolio table already exist.")
+    else:
+        try:
+            # Create the Portfolio table
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS Portfolio (
+                portfolio_ID bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+                portfolio_Image varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                portfolio_Title varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                portfolio_Long_Description text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                client varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                client_URL varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                category varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                PRIMARY KEY (portfolio_ID)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            """)
+            print("Portfolio table created.")
+        except Exception as e:
+            print("Error creating the Portfolio table:", e)
 
-        # Create the Portfolio table
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS Portfolio (
-            portfolio_ID bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-            portfolio_Image varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-            portfolio_Title varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-            portfolio_Long_Description text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-            client varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-            client_URL varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-            category varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-            PRIMARY KEY (portfolio_ID)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        """)
+    if profile_table:
+        print("Profile table already exist.")
+    else:
+        try:
+            # Create the profile table
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS profile (
+                profile_ID int NOT NULL AUTO_INCREMENT,
+                profile_Intro1 varchar(500) NOT NULL,
+                profile_Intro2 varchar(500) NOT NULL,
+                profile_Continua varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                PRIMARY KEY (profile_ID)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            """)
+            print("Profile table created.")
+        except Exception as e:
+            print("Error creating the Profile table:", e)
 
-        # Create the profile table
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS profile (
-            profile_ID int NOT NULL AUTO_INCREMENT,
-            profile_Intro1 varchar(500) NOT NULL,
-            profile_Intro2 varchar(500) NOT NULL,
-            profile_Continua varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-            PRIMARY KEY (profile_ID)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        """)
+    if services_table:
+        print("Services table already exist.")
+    else:
+        try:
+            # Create the services table
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS services (
+                service_ID bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+                service_Image varchar(255) NOT NULL,
+                service_Title varchar(255) NOT NULL,
+                service_Description text NOT NULL,
+                PRIMARY KEY (service_ID)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            """)
+            print("Services table created.")
+        except Exception as e:
+            print("Error creating the Services table:", e)
 
-        # Create the services table
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS services (
-            service_ID bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-            service_Image varchar(255) NOT NULL,
-            service_Title varchar(255) NOT NULL,
-            service_Description text NOT NULL,
-            PRIMARY KEY (service_ID)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        """)
+    if users_table:
+        print("Users table already exist.")
+    else:
+        try:
+            # Create the Users table
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS Users (
+                user_ID int NOT NULL AUTO_INCREMENT,
+                user_Name varchar(255) NOT NULL,
+                password varchar(255) NOT NULL,
+                PRIMARY KEY (user_ID)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            """)
+            print("Users table created.")
+        except Exception as e:
+            print("Error creating the Users table:", e)
 
-        # Create the Users table
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS Users (
-            user_ID int NOT NULL AUTO_INCREMENT,
-            user_Name varchar(255) NOT NULL,
-            password varchar(255) NOT NULL,
-            PRIMARY KEY (user_ID)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        """)
-        # Insert a user into the Users table
-        user_name= admin_name
-        user_password=hashlib.sha256(admin_password.encode()).hexdigest()
+    admin = cursor.execute("SELECT * FROM Users WHERE user_Name = %s", (admin_name,))
+    if admin:
+        print(f"User '{admin_name}' already exists.")
+    else:
+        try:
+            # Insert a user into the Users table
+            user_name= admin_name
+            user_password=hashlib.sha256(admin_password.encode()).hexdigest()
 
 
-        insert_user_query = f"INSERT INTO Users (user_Name, password) VALUES ('{user_name}', '{user_password}')"
-        cursor.execute(insert_user_query)
-        db.commit()
+            insert_user_query = f"INSERT INTO Users (user_Name, password) VALUES ('{user_name}', '{user_password}')"
+            cursor.execute(insert_user_query)
+            db.commit()
 
-        print(f"User '{user_name}' inserted into the Users table.")
+            print(f"User '{user_name}' inserted into the Users table.")
 
-        # Close the cursor and the database connection
-        cursor.close()
-        db.close()
+            # Close the cursor and the database connection
+            cursor.close()
+            db.close()
+        except Exception as e:
+            print("Error inserting the user:", e)
 
         print("Database and tables setup completed successfully!")
 
