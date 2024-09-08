@@ -137,6 +137,3 @@ def seed():
     db.close()
 
     print("Database and tables setup completed successfully!")
-
-if __name__ == "__main__":
-    seed()
