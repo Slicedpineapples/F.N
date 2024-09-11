@@ -63,8 +63,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             window.location.href = 'login.html'; // Redirect back to login page on failure
         }
     } catch (error) {
-        document.getElementById('loginMessage').innerText = 'An error occurred. Please try again.';
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        document.getElementById('loginMessage').innerText = 'A network error occurred. Please reconnect and try again.';
+        await new Promise(resolve => setTimeout(resolve, 3000));
         window.location.href = 'login.html'; // Redirect back to login page on error
     }
 });
