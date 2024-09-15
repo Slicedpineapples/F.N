@@ -2,32 +2,37 @@ from server import connect
 import hashlib
 
 global message
-message = ""   
+message = ""
 
 def signUp(username, password):
     username = username
     password = hashlib.sha256(password.encode()).hexdigest()
+    
+    # Initialize cursor and signup to None
+    cursor = None
+    signup = None
+    
     try:
-        signup = connect() 
+        signup = connect()
         cursor = signup.cursor()
 
         sql = "INSERT INTO Users (user_Name, password) VALUES (%s, %s)"
         values = (username, password)
         cursor.execute(sql, values)
         signup.commit()
-        message = "User created successfully!\n Proceed to login."
-        
+        message = "User created successfully!\nProceed to login."
 
     except Exception as e:
-        message = "Something went wrong:", e
+        message = f"Something went wrong: {e}"
         print("Error:", e)
 
     finally:
+        # Close cursor and signup if they are not None
         if cursor:
             cursor.close()
         if signup:
             signup.close()
-    # userId = cursor.lastrowid
+    
     return message
 
 
