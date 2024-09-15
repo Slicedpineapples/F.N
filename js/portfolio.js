@@ -1,14 +1,18 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     const api = 'https://f-n-2.onrender.com';
-    fetch(`${api}/portfolio`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ operation: 'OUTPUT' })
-    })
-    .then(response => response.json())
-    .then(data => {
+
+    try {
+        // Fetch data from the API
+        const response = await fetch(`${api}/portfolio`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ operation: 'OUTPUT' })
+        });
+
+        const data = await response.json();
+
         let portfolioRow = document.querySelector("#portfolio .row");
         if (portfolioRow) {
             data.forEach((item) => {
@@ -35,10 +39,10 @@ document.addEventListener("DOMContentLoaded", function() {
             // Inject modals after fetching the data and creating portfolio items
             injectModals(data);
         }
-    })
-    .catch(error => console.error('Error fetching portfolio data:', error));
+    } catch (error) {
+        console.error('Error fetching portfolio data:', error);
+    }
 });
-
 
 // Function to create modal HTML
 function createModalHTML(portfolioItem) {
@@ -90,4 +94,3 @@ function injectModals(portfolioData) {
         });
     }
 }
-
