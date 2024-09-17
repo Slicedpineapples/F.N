@@ -11,3 +11,5 @@ build/
 coverage/
 .spec
 __pycache__/
+secret.txt
+
