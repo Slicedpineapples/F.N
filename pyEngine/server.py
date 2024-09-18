@@ -22,4 +22,4 @@ def connect():
         return cnx
     
 
-# connect() # Debugging purpose only
+connect() # Debugging purpose only
